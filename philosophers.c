@@ -1,32 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philosophers.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mymik <mymik@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/02/13 08:40:46 by mymik             #+#    #+#             */
+/*   Updated: 2021/02/13 08:48:16 by mymik            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philosophers.h"
-
-void	mutexes_init(void)
-{
-	int i;
-
-	g_forks = malloc(sizeof(pthread_mutex_t) * g_n);
-	pthread_mutex_init(&g_io_lock, NULL);
-	i = -1;
-	while (++i < g_n)
-		pthread_mutex_init(&g_forks[i], NULL);
-		i++;
-}
-
-void	mutexes_clear(void)
-{
-	int i;
-
-	i = -1;
-	while (++i < g_n)
-		pthread_mutex_destroy(&g_forks[i]);
-	pthread_mutex_destroy(&g_io_lock);
-	free(g_forks);
-}
 
 void	philosophers_init(void)
 {
 	int i;
-	int tmp;
 
 	g_ps = malloc(sizeof(t_philo) * g_n);
 	i = -1;
@@ -40,108 +28,6 @@ void	philosophers_init(void)
 		pthread_mutex_init(&g_ps[i].mutex, NULL);
 	}
 	g_someone_died = 1;
-}
-
-int		take_fork(t_philo *p)
-{
-	if (g_someone_died)
-	{
-		pthread_mutex_lock(&g_forks[p->left]);
-		print_message(p, FORK);
-		if (g_someone_died)
-		{
-			pthread_mutex_lock(&g_forks[p->right]);
-			print_message(p, FORK);
-			return (1);
-		}
-	}
-	return (0);
-}
-
-int		release_fork(t_philo *p)
-{
-	if (g_someone_died)
-	{
-		pthread_mutex_unlock(&g_forks[p->left]);
-		pthread_mutex_unlock(&g_forks[p->right]);
-			return (1);
-	}
-	return (0);
-}
-
-int		eat(t_philo *p)
-{
-	if (g_someone_died)
-	{
-		pthread_mutex_lock(&p->mutex);
-		p->eating = 1;
-		print_message(p, EAT);
-		p->last_meal = get_time();
-		p->limit = p->last_meal + g_die;
-		usleep(g_eat * 1000);
-		p->eating = 0;
-		pthread_mutex_unlock(&p->mutex);
-		return (1);
-	}
-	return (0);
-}
-
-int		go_sleep(t_philo *p)
-{
-	if (g_someone_died)
-	{
-		print_message(p, SLEEP);
-		usleep(g_sleep * 1000);
-		return (1);
-	}
-	return (0);
-}
-
-void	*check_health(void *data)
-{
-	t_philo *p = data;
-	while (g_someone_died)
-	{
-		pthread_mutex_lock(&p->mutex);
-		if (!p->eating && get_time() > p->limit)
-		{
-			print_message(p, DIED);
-			g_someone_died = 0;
-			return (NULL);
-		}
-		pthread_mutex_unlock(&p->mutex);
-	}
-	return (NULL);
-}
-
-void	*philosophers_routine(void *data)
-{
-	t_philo *p = data;
-	p->last_meal = get_time();
-	p->limit = p->last_meal + g_die;
-	pthread_create(&p->th_health, NULL, check_health, p);
-	pthread_detach(p->th_health);
-	p->last_meal = get_time();
-	p->limit = p->last_meal + g_die;
-	while (g_someone_died)
-	{
-		if (!take_fork(p))
-			return (NULL);
-		if (!eat(p))
-			return (NULL);
-		if (!release_fork(p))
-			return (NULL);
-		p->eat_count++;
-		if (g_count != -1 && p->eat_count == g_count)
-		{
-			g_eat_count++;
-			return (NULL);
-		}
-		if (!go_sleep(p))
-			return (NULL);
-		print_message(p, THINK);
-	}
-	return (NULL);
 }
 
 void	philosophers_start(void)

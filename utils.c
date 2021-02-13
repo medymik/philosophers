@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mymik <mymik@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/02/13 08:11:37 by mymik             #+#    #+#             */
+/*   Updated: 2021/02/13 08:12:02 by mymik            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philosophers.h"
 
-int	ft_isnumeric(char *str)
+int		ft_isnumeric(char *str)
 {
 	int i;
 
@@ -41,29 +53,23 @@ int		ft_atoi(const char *str)
 	return (value);
 }
 
-
-void		ft_putnbr_fd(unsigned long long n, int fd)
+void	ft_putnbr_fd(unsigned long long n, int fd)
 {
-	char		tmp;
-	unsigned long long nb;
+	char	str[13];
+	int		length;
 
-	nb = n;
-	if (nb < 0)
+	if (n == 0)
+		str[0] = '0';
+	length = 0;
+	while (n != 0)
 	{
-		tmp = '-';
-		write(fd, &tmp, 1);
-		nb = nb * -1;
+		str[length++] = '0' + (n % 10);
+		n = (n / 10);
 	}
-	if (nb < 10)
-	{
-		tmp = nb + 48;
-		write(fd, &tmp, 1);
-	}
-	else
-	{
-		ft_putnbr_fd(nb / 10, fd);
-		ft_putnbr_fd(nb % 10, fd);
-	}
+	if (length > 0)
+		length--;
+	while (length >= 0)
+		write(fd, &str[length--], 1);
 }
 
 void	ft_putstr(char *str)
