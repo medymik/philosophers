@@ -15,11 +15,10 @@ int	main(int argc, char **argv)
 
 	philosophers_init();
 	philosophers_start();
-	while (g_someone_died)
+	while (g_someone_died && g_eat_count != g_n)
 	{
 		usleep(100);
 	}
 	philosophers_clear();
-	free(g_forks);
 	return (0);
 }

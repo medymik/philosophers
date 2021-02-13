@@ -33,6 +33,7 @@ void	philosophers_init(void)
 	mutexes_init();
 	while (++i < g_n)
 	{
+		g_ps[i].eat_count = 0;
 		g_ps[i].id = i;
 		g_ps[i].left = i;
 		g_ps[i].right = (i + 1) % g_n;
@@ -101,7 +102,6 @@ void	*check_health(void *data)
 	t_philo *p = data;
 	while (g_someone_died)
 	{
-		// printf("%lu == %lu\n", get_time(), p->last_meal);
 		pthread_mutex_lock(&p->mutex);
 		if (!p->eating && get_time() > p->limit)
 		{
@@ -131,6 +131,12 @@ void	*philosophers_routine(void *data)
 			return (NULL);
 		if (!release_fork(p))
 			return (NULL);
+		p->eat_count++;
+		if (g_count != -1 && p->eat_count == g_count)
+		{
+			g_eat_count++;
+			return (NULL);
+		}
 		if (!go_sleep(p))
 			return (NULL);
 		print_message(p, THINK);

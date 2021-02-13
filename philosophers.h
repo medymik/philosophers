@@ -43,6 +43,7 @@ typedef struct		s_philo
 	pthread_t		th;
 	pthread_t		th_health;
 	pthread_mutex_t		mutex;
+	int				eat_count;
 }			t_philo;
 
 pthread_mutex_t	*g_forks;
@@ -55,6 +56,7 @@ int		g_sleep;
 int		g_count;
 int		g_someone_died;
 unsigned long	g_start;
+int		g_eat_count;
 
 void	print_message(t_philo *p, int state);
 
