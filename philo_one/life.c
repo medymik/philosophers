@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   life.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mymik <mymik@student.42.fr>                +#+  +:+       +#+        */
+/*   By: devo <devo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 08:36:03 by mymik             #+#    #+#             */
-/*   Updated: 2021/02/13 08:40:24 by mymik            ###   ########.fr       */
+/*   Updated: 2021/02/13 15:23:32 by devo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ void			*check_health(void *data)
 	p = data;
 	while (g_someone_died)
 	{
-		pthread_mutex_lock(&p->mutex);
 		if (p->eat_count != -1 && p->eat_count == g_count)
 		{
 			return (NULL);
@@ -32,7 +31,6 @@ void			*check_health(void *data)
 			g_someone_died = 0;
 			return (NULL);
 		}
-		pthread_mutex_unlock(&p->mutex);
 		usleep(100);
 	}
 	return (NULL);
