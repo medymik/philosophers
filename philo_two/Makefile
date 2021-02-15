@@ -18,7 +18,7 @@ INCLUDES=philosophers.h
 $(NAME): all
 
 all: $(OBJS)
-	$(CC) $(FLAGS) $(OBJS) -o $(NAME)
+	$(CC) $(FLAGS) $(OBJS) -lpthread -o $(NAME)
 
 clean:
 	rm -f $(OBJS)

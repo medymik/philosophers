@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mymik <mymik@student.42.fr>                +#+  +:+       +#+        */
+/*   By: devo <devo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 08:43:33 by mymik             #+#    #+#             */
-/*   Updated: 2021/02/13 09:15:28 by mymik            ###   ########.fr       */
+/*   Updated: 2021/02/15 02:25:45 by devo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <pthread.h>
 # include <sys/time.h>
 # include <semaphore.h>
+# include <fcntl.h>
 
 typedef enum			e_state
 {

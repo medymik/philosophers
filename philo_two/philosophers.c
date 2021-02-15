@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mymik <mymik@student.42.fr>                +#+  +:+       +#+        */
+/*   By: devo <devo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 08:40:46 by mymik             #+#    #+#             */
-/*   Updated: 2021/02/13 09:08:06 by mymik            ###   ########.fr       */
+/*   Updated: 2021/02/15 02:26:00 by devo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,6 @@ void	philosophers_start(void)
 
 void	philosophers_clear(void)
 {
-	int i;
-
-	i = -1;
 	free(g_ps);
 	semaphores_clear();
 }

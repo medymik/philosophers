@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   semaphores.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mymik <mymik@student.42.fr>                +#+  +:+       +#+        */
+/*   By: devo <devo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 08:14:12 by mymik             #+#    #+#             */
-/*   Updated: 2021/02/13 09:49:08 by mymik            ###   ########.fr       */
+/*   Updated: 2021/02/15 03:14:53 by devo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ void	semaphores_init(void)
 
 void	semaphores_clear(void)
 {
+	sem_close(g_forks);
 	sem_unlink("forks");
+	sem_close(g_io_lock);
 	sem_unlink("io_lock");
 }
