@@ -15,9 +15,9 @@ OBJS= $(SRCS:.c=.o)
 NAME=philo_one
 INCLUDES=philosophers.h
 
-$(NAME): all
+all: $(NAME)
 
-all: $(OBJS)
+$(NAME): $(OBJS)
 	$(CC) $(FLAGS) $(OBJS) -lpthread -o $(NAME)
 
 clean:
@@ -25,6 +25,8 @@ clean:
 
 fclean: clean
 	rm -f $(NAME)
+
+re: fclean all
 
 %.o: %.c $(INCLUDES)
 	$(CC) $(FLAGS) -c $< -o $@

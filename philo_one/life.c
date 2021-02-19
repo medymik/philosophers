@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   life.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: devo <devo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mymik <mymik@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 08:36:03 by mymik             #+#    #+#             */
-/*   Updated: 2021/02/13 15:23:32 by devo             ###   ########.fr       */
+/*   Updated: 2021/02/19 07:32:55 by mymik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,6 @@ void			*check_health(void *data)
 		}
 		if (!p->eating && get_time() > p->limit)
 		{
-			pthread_mutex_lock(&g_io_lock);
-			pthread_mutex_unlock(&g_io_lock);
 			print_message(p, DIED);
 			g_someone_died = 0;
 			return (NULL);
