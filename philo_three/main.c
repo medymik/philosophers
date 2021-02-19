@@ -6,7 +6,7 @@
 /*   By: devo <devo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/17 23:39:36 by devo              #+#    #+#             */
-/*   Updated: 2021/02/17 23:45:16 by devo             ###   ########.fr       */
+/*   Updated: 2021/02/19 01:59:33 by devo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,16 @@ void			*mounitor(void *data)
 	while (++i < g_n)
 		sem_wait(g_seat_count);
 	sem_post(g_stop);
-	return (NULL);
+	return (data);
+}
+
+void			init_prog(int argc, char **argv)
+{
+	g_n = ft_atoi(argv[1]);
+	g_die = ft_atoi(argv[2]);
+	g_eat = ft_atoi(argv[3]) * 1000;
+	g_sleep = ft_atoi(argv[4]) * 1000;
+	g_eat_count = (argc == 6) ? ft_atoi(argv[5]) : -1;
 }
 
 int				main(int argc, char **argv)
@@ -48,11 +57,12 @@ int				main(int argc, char **argv)
 	pthread_t	th_monitor;
 	int			i;
 
-	g_n = ft_atoi(argv[1]);
-	g_die = ft_atoi(argv[2]);
-	g_eat = ft_atoi(argv[3]);
-	g_sleep = ft_atoi(argv[4]);
-	g_eat_count = (argc == 6) ? ft_atoi(argv[5]) : -1;
+	init_prog(argc, argv);
+	if (!args_isvalid(argc, argv))
+	{
+		print_error("Error : arguments are not valid\n");
+		return (1);
+	}
 	philosophers_init();
 	semaphores_init();
 	philosophers_start();
@@ -66,5 +76,6 @@ int				main(int argc, char **argv)
 	sem_close(g_io_lock);
 	sem_close(g_seat_count);
 	sem_close(g_stop);
+	free(g_ps);
 	return (0);
 }

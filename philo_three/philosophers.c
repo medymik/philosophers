@@ -6,7 +6,7 @@
 /*   By: devo <devo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/17 23:49:28 by devo              #+#    #+#             */
-/*   Updated: 2021/02/17 23:50:52 by devo             ###   ########.fr       */
+/*   Updated: 2021/02/19 01:59:58 by devo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,32 +43,18 @@ void		philosophers_start(void)
 	}
 }
 
-void		*health_check(void *data)
+void		release_fork(void)
 {
-	t_philo *p;
-
-	p = data;
-	while (1)
-	{
-		if (get_time() > p->limit)
-		{
-			print_message(p, DIED);
-			sem_post(g_stop);
-			return (NULL);
-		}
-	}
-	return (NULL);
+	sem_post(g_forks);
+	sem_post(g_forks);
 }
 
 void		philosophers_routine(t_philo *p)
 {
 	int eat;
 
+	init_time_monitor(p);
 	eat = 0;
-	p->last_meal = get_time();
-	p->limit = p->last_meal + g_die;
-	pthread_create(&p->health, NULL, health_check, p);
-	pthread_detach(p->health);
 	while (1)
 	{
 		sem_wait(g_forks);
@@ -76,20 +62,17 @@ void		philosophers_routine(t_philo *p)
 		sem_wait(g_forks);
 		print_message(p, FORK);
 		print_message(p, EAT);
-		p->last_meal = get_time();
-		p->limit = p->last_meal + g_die;
+		set_new_time(p);
 		eat++;
-		usleep(EAT_TIME);
-		sem_post(g_forks);
-		sem_post(g_forks);
+		usleep(g_eat);
+		release_fork();
 		if (g_eat_count != -1 && eat == g_eat_count)
 		{
 			sem_post(g_seat_count);
 			exit(0);
 		}
 		print_message(p, SLEEP);
-		usleep(SLEEP_TIME);
+		usleep(g_sleep);
 		print_message(p, THINK);
 	}
-	exit(0);
 }
