@@ -6,11 +6,12 @@
 /*   By: mymik <mymik@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 08:40:54 by mymik             #+#    #+#             */
-/*   Updated: 2021/02/13 09:42:30 by mymik            ###   ########.fr       */
+/*   Updated: 2021/02/19 07:58:32 by mymik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
+#include <stdio.h>
 
 int	main(int argc, char **argv)
 {
@@ -27,9 +28,7 @@ int	main(int argc, char **argv)
 	philosophers_init();
 	philosophers_start();
 	while (g_someone_died && g_eat_count != g_n)
-	{
 		usleep(2000);
-	}
 	philosophers_clear();
 	return (0);
 }

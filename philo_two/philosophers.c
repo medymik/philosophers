@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: devo <devo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mymik <mymik@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 08:40:46 by mymik             #+#    #+#             */
-/*   Updated: 2021/02/15 02:26:00 by devo             ###   ########.fr       */
+/*   Updated: 2021/02/19 08:24:35 by mymik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,5 +46,6 @@ void	philosophers_start(void)
 void	philosophers_clear(void)
 {
 	free(g_ps);
-	semaphores_clear();
+	sem_unlink("forks");
+	sem_unlink("io_lock");
 }
