@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: devo <devo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mymik <mymik@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/17 23:39:36 by devo              #+#    #+#             */
-/*   Updated: 2021/02/19 01:59:33 by devo             ###   ########.fr       */
+/*   Updated: 2021/02/19 08:37:34 by mymik            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,10 +72,6 @@ int				main(int argc, char **argv)
 	i = 0;
 	while (++i < g_n)
 		kill(g_ps[i].pid, SIGKILL);
-	sem_close(g_forks);
-	sem_close(g_io_lock);
-	sem_close(g_seat_count);
-	sem_close(g_stop);
 	free(g_ps);
 	return (0);
 }
