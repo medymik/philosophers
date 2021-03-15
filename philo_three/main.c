@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mymik <mymik@student.42.fr>                +#+  +:+       +#+        */
+/*   By: devo <devo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/17 23:39:36 by devo              #+#    #+#             */
-/*   Updated: 2021/02/19 08:37:34 by mymik            ###   ########.fr       */
+/*   Updated: 2021/03/15 13:49:52 by devo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,12 @@ int				main(int argc, char **argv)
 	pthread_t	th_monitor;
 	int			i;
 
-	init_prog(argc, argv);
 	if (!args_isvalid(argc, argv))
 	{
 		print_error("Error : arguments are not valid\n");
 		return (1);
 	}
+	init_prog(argc, argv);
 	philosophers_init();
 	semaphores_init();
 	philosophers_start();
@@ -70,8 +70,16 @@ int				main(int argc, char **argv)
 	pthread_detach(th_monitor);
 	sem_wait(g_stop);
 	i = 0;
-	while (++i < g_n)
-		kill(g_ps[i].pid, SIGKILL);
+	// while (++i < g_n)
+	// 	kill(g_ps[i].pid, SIGKILL);
 	free(g_ps);
+	sem_close(g_forks);
+	sem_close(g_stop);
+	sem_close(g_io_lock);
+	sem_close(g_seat_count);
+	sem_destroy(g_forks);
+	sem_destroy(g_stop);
+	sem_destroy(g_io_lock);
+	sem_destroy(g_seat_count);
 	return (0);
 }

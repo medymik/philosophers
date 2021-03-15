@@ -6,7 +6,7 @@
 /*   By: devo <devo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/19 01:30:22 by devo              #+#    #+#             */
-/*   Updated: 2021/02/19 01:30:22 by devo             ###   ########.fr       */
+/*   Updated: 2021/03/15 13:45:45 by devo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void		*health_check(void *data)
 		{
 			print_message(p, DIED);
 			sem_post(g_stop);
+			exit(0);
 			return (NULL);
 		}
 	}
